@@ -19,45 +19,89 @@
 
         <!-- start history part -->
         <div class="history">
-            <div class="top-bg">
-
-            </div>
+            <div class="top-bg"></div>
 
             <div class="month-day-history-container">
                 <!-- title -->
                 <div class="title-box">
                     <h3 class="title">History</h3>
-                    <button class="year-btn">
-                        <span>2023</span>
-                        <ion-icon name="caret-down-outline"></ion-icon>
-                    </button>
+                    <div class="year-list-container">
+                        <button class="year-btn">
+                            <span class="autoyear">2023</span>
+                            <ion-icon name="caret-down-outline"></ion-icon>
+                        </button>
+    
+                        <ul class="year-lists">
+                            <li class="year-item">
+                                <a href="javascript:void(0);" id="autoyear" class="years">2023</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
                 </div>
                 <!-- title -->
 
                 <!-- month & days -->
-                <ul class="month-day-list-container">
-                    <li class="month-container">
-                        <a href="javascript:void(0);">
-                            <p><span>3</span> month</p>
-                            <p>icon</p>
+                <ul class="month-container">
+                    <li class="month-item">
+                        <a href="javascript:void(0);" class="month-btn">
+                            <p><span class="automonth">3</span> month</p>
+                            <ion-icon name="caret-down-outline" class="dropdown-icon"></ion-icon>
                         </a>
 
                         <ul class="days-container">
-                            <li>
-                                <a href="javascript:void(0);">
-                                    <p><span>17</span> - <span>5</span></p>
-                                    <p>icon</p>
+                            <li class="day-item">
+                                <a href="javascript:void(0);" class="day-btn">
+                                    <p><span class="autoday">17</span> - <span class="dayinmonth">5</span></p>
+                                    <ion-icon name="caret-forward-outline"></ion-icon>
                                 </a>
                             </li>
                         </ul>
-
                     </li>
+                    
                 </ul>
                 <!-- month & days -->
             </div>
 
         </div>
         <!-- end history part -->
+
+
+
+        <!-- start main part -->
+        <main>
+
+            <!-- start navbar -->
+            <nav class="navbar">
+                <h2 id="main-title" class="main-title">Today</h2>
+            </nav>
+            <!-- end navbar -->
+
+            <!-- start content area -->
+            <div class="contents-container">
+
+                <div class="empty-page">
+                    
+                </div>
+
+            </div>
+            <!-- end content area -->
+
+        </main>
+        <!-- end main part -->
+
+
+        <!-- start times part -->
+        <section class="times-container">
+            <div class="top-bg"></div>
+
+            <div class="times">
+                <p class="time-item">Learn - <span class="ln-time">5</span> times</p>
+                <p class="time-item">Study - <span class="st-time">5</span> times</p>
+            </div>
+        </section>
+        <!-- end times part -->
+
 
     </div>
 

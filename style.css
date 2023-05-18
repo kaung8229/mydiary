@@ -13,10 +13,13 @@
     --bg-background: rgb(232, 251, 255);
     --bg-navbar: rgb(3, 4, 94);
     --bg-text-item: rgb(202, 246, 255);
+    --bg-year: rgb(208, 238, 248);
 
     --bg-month-day-list: rgb(144, 224, 239);
     --bg-month-hover: rgb(0, 180, 216);
+    --bg-day-hover: rgba(0, 180, 216, 50%);
     --bg-month-day-active: rgb(0, 119, 182);
+    --bg-month-container: rgba(0, 119, 182, 10%);
 
     --text-color: rgb(3, 4, 94);
     --text-time-color: rgba(3, 4, 94, 50%);
@@ -42,6 +45,7 @@ body{
 .history{
     position: relative;
     width: 20%;
+    box-shadow: 5px 0 20px rgba(0,0,0,0.1);
 }
 
 .top-bg{
@@ -55,7 +59,8 @@ body{
 }
 
 .title-box{
-    margin-bottom: 10px;
+    position: relative;
+    margin-bottom: 15px;
 
     display: flex;
     justify-content: space-between;
@@ -64,12 +69,16 @@ body{
 .title-box .title{
     font-size: 1.5em;
 }
-.title-box .year-btn{
+
+.title-box .year-list-container{
+    position: relative;
+}
+.year-list-container .year-btn{
     font-size: 15px;
     padding: 5px 20px;
     border: none;
     background: transparent;
-    border-radius: 20px;
+    border-radius: 5px;
 
     display: flex;
     justify-content: space-between;
@@ -80,15 +89,166 @@ body{
 
     transition: 0.3s;
 }
-.title-box .year-btn:hover{
+.year-list-container .year-btn:hover{
     background: var(--bg-month-day-list);
 }
-.title-box .year-btn:active{
+.year-list-container .year-btn.active{
     background: var(--bg-navbar);
     color: #fff;
 }
 
+.year-lists{
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    width: 150px;
+    padding: 8px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 5px 0 10px rgba(0,0,0,0.1);
+
+    z-index: 100;
+
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+
+    transition: 0.2s;
+}
+.year-list-container .year-btn.active + .year-lists{
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0px);
+}
+.year-item{
+    list-style: none;
+    margin-bottom: 5px;
+}
+.year-item:last-of-type{
+    margin-bottom: 0;
+}
+.year-item .years{
+    display: inline-block;
+    width: 100%;
+    background: var(--bg-month-day-list);
+    padding: 3px 15px;
+    border-radius: 5px;
+    color: var(--text-color);
+    text-decoration: none;
+}
+.year-item .years:hover{
+    background: var(--bg-day-hover);
+}
+.year-item .years.active{
+    background: var(--bg-month-day-active);
+    color: #fff;
+}
+
+
+
+/* start month & days */
+.month-container{
+    position: relative;
+    list-style: none;
+}
+
+.month-item{
+    margin-bottom: 10px;
+    background: var(--bg-month-container);
+    border-radius: 5px;
+}
+
+.month-item .month-btn,
+.day-item .day-btn{
+    background: var(--bg-month-day-list);
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: var(--text-color);
+    text-decoration: none;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.month-item .month-btn .dropdown-icon{
+    transition: 0.3s;
+}
+.month-item .month-btn:hover{
+    background: var(--bg-month-hover);
+}
+.month-item .month-btn.active{
+    background: var(--bg-month-day-active);
+    color: #fff;
+}
+.month-item .month-btn.active .dropdown-icon{
+    transform: rotate(180deg);
+}
+
+.days-container{
+    position: relative;
+    height: 0;
+    list-style: none;
+    overflow: hidden;
+
+    transition: 0.2s;
+}
+.day-item{
+    margin: 10px 0 10px 10px;
+}
+
+.day-item .day-btn{
+    margin-right: 10px;
+
+    transition: 0.2s;
+}
+.day-item .day-btn p{
+    line-height: 1;
+}
+.day-item .day-btn:hover{
+    background: var(--bg-day-hover);
+}
+.day-item .day-btn.active{
+    background: var(--bg-month-day-active);
+    color: #fff;
+    margin-right: 0px;
+}
+/* end month & days */
+
 /* end history part */
+
+
+
+
+/* start main part */
+main{
+    position: relative;
+    width: 60%;
+}
+.navbar{
+    height: 60px;
+    background: var(--bg-navbar);
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+}
+/* end main part */
+
+
+/* start just part */
+.times-container{
+    width: 20%;
+    border-left: 1px solid var(--bg-navbar);
+}
+.times{
+    padding: 20px;
+}
+.time-item{
+    padding: 8px 0px;
+    border-radius: 5px;
+    color: var(--text-color);
+}
+/* end just part */
 
 
 
