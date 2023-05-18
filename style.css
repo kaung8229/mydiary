@@ -232,10 +232,89 @@ main{
     text-align: center;
     line-height: 60px;
 }
+
+/* start content area */
+.contents-container{
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 60px);
+}
+
+.empty-page{
+    height: 100%;
+    text-align: center;
+
+    display: grid;
+    place-items: center;
+}
+.empty-page.hide{
+    display: none;
+}
+.empty-page lord-icon{
+    width: 100px;
+    height: 100px;
+    margin-bottom: -20px;
+}
+
+
+.data-add-btn{
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+
+    padding: 10px 30px;
+    border: none;
+    border-radius: 30px;
+    background: var(--bg-navbar);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    z-index: 100;
+}
+.data-add-btn:active{
+    background: var(--bg-month-hover);
+}
+.data-add-btn .tooltip{
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+
+    width: 400px;
+    padding: 20px;
+    background: var(--bg-month-day-list);
+    color: var(--text-color);
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(3, 4, 94, 0.15);
+
+    transform: translateY(-20px);
+}
+.data-add-btn .tooltip .tooltip-arrow{
+    position: absolute;
+    top: 100%;
+    right: 35px;
+
+    border-width: 13px;
+    border-style: solid;
+    border-color: var(--bg-month-day-list) transparent transparent transparent;
+}
+.data-add-btn .tooltip h3{
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.data-add-btn .tooltip p{
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-color);
+}
+/* end content area */
+
 /* end main part */
 
 
-/* start just part */
+/* start times part */
 .times-container{
     width: 20%;
     border-left: 1px solid var(--bg-navbar);
@@ -248,7 +327,7 @@ main{
     border-radius: 5px;
     color: var(--text-color);
 }
-/* end just part */
+/* start times part */
 
 
 

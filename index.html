@@ -80,9 +80,25 @@
             <!-- start content area -->
             <div class="contents-container">
 
-                <div class="empty-page">
-                    
+                <div class="empty-page hide">
+                    <div>
+                        <lord-icon
+                            src="https://cdn.lordicon.com/wrprwmwt.json"
+                            trigger="hover"
+                            colors="primary:#121331,secondary:#08a88a">
+                        </lord-icon>
+                        <p>No Data</p>
+                    </div>
                 </div>
+
+                <button type="button" class="data-add-btn">
+                    <div class="tooltip">
+                       <h3>What have you done now?</h3>
+                       <p>Write down things that have you done today.</p>
+                       <i class="tooltip-arrow"></i>
+                    </div>
+                    Add
+                </button>
 
             </div>
             <!-- end content area -->
@@ -96,8 +112,8 @@
             <div class="top-bg"></div>
 
             <div class="times">
-                <p class="time-item">Learn - <span class="ln-time">5</span> times</p>
-                <p class="time-item">Study - <span class="st-time">5</span> times</p>
+                <p class="time-item">Learn - <span class="ln-time">0</span> times</p>
+                <p class="time-item">Study - <span class="st-time">0</span> times</p>
             </div>
         </section>
         <!-- end times part -->
@@ -113,6 +129,9 @@
     <!-- for icon js -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- for lordicon -->
+    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
 
     <!-- custom js -->
     <script src="./app.js"></script>
