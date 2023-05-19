@@ -7,13 +7,14 @@ var uimonthbtns = document.querySelectorAll('.month-btn');
 var uidaycontainers = document.querySelectorAll('.days-container');
 var uidaybtns = document.querySelectorAll('.day-btn');
 
+alwaysactive();
+
 function alwaysactive(){
     uiyears[uiyears.length-1].classList.add('active');
     uimonthbtns[uimonthbtns.length-1].classList.add("active");
     uidaybtns[uidaybtns.length-1].classList.add("active");
     uidaycontainers[uidaycontainers.length-1].style.height = uidaycontainers[uidaycontainers.length-1].scrollHeight + "px";
 }
-alwaysactive();
 
 // start year
 uiyearbtn.onclick = function(){

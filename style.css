@@ -14,6 +14,7 @@
     --bg-navbar: rgb(3, 4, 94);
     --bg-text-item: rgb(202, 246, 255);
     --bg-year: rgb(208, 238, 248);
+    --bg-big-black: rgba(0,0,0,0.5);
 
     --bg-month-day-list: rgb(144, 224, 239);
     --bg-month-hover: rgb(0, 180, 216);
@@ -219,6 +220,88 @@ body{
 
 
 
+/* start Add data pop-up box */
+.add-data-box-big-bg{
+    position: absolute;
+
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-big-black);
+
+    display: grid;
+    place-items: center;
+
+    z-index: 1000;
+}
+.add-data-box-big-bg.hide{
+    display: none;
+}
+.add-data-box{
+    position: relative;
+    width: 800px;
+    background: var(--bg-background);
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.add-data-box .btn-close{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: 30px;
+    height: 30px;
+    background: var(--bg-navbar);
+    color: #fff;
+
+    border: none;
+    border-radius: 5px;
+
+    display: grid;
+    place-items: center;
+
+    cursor: pointer;
+}
+.add-data-box .btn-close:active{
+    background: var(--bg-month-hover);
+}
+
+.add-data-box .title{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-data-box .data-text{
+    width: 100%;
+    padding: 15px;
+    font-size: 14px;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 10px;
+
+    resize: vertical;
+}
+.add-data-box .data-text:focus{
+    border-color:rgba(0,0,0,0.7);
+}
+
+
+.submit-btn{
+    width: 100%;
+    background: var(--bg-navbar);
+    color: #fff;
+    padding: 8px;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+/* end Add data pop-up box */
+
+
+
 
 /* start main part */
 main{
@@ -240,6 +323,7 @@ main{
     height: calc(100vh - 60px);
 }
 
+/* start empty-page */
 .empty-page{
     height: 100%;
     text-align: center;
@@ -255,8 +339,11 @@ main{
     height: 100px;
     margin-bottom: -20px;
 }
+/* end empty-page */
 
 
+
+/* start add button */
 .data-add-btn{
     position: absolute;
     right: 30px;
@@ -309,15 +396,84 @@ main{
     font-weight: 400;
     color: var(--text-color);
 }
-/* end content area */
 
+.data-add-btn .tooltip.hide{
+    display: none;
+}
+
+.data-add-btn .tooltip.animate{
+    animation: tooltipanimate 1.5s infinite linear;
+}
+
+@keyframes tooltipanimate{
+    0%,100%{
+        transform: translateY(-20px);
+    }
+    50%{
+        transform: translateY(-10px);
+    }
+}
+/* start add button */
+
+
+/* start contents  */
+.contents{
+    width: 100%;
+    height: 100%;
+    /* background: red; */
+
+    padding: 20px;
+}
+.contents .title{
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* start content-items */
+.contentItem-container{
+    position: relative;
+    width: 100%;
+    height: calc(100% - 20px);
+}
+
+.content-item{
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    background: var(--bg-month-day-list);
+    color: var(--text-color);
+    margin-bottom: 15px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+.content-item:hover{
+    transform: scale(1.01);
+    background: var(--bg-day-hover);
+    /* box-shadow: 0 0 20px rgba(0,0,0,0.1); */
+}
+.content-item .time-text{
+    font-size: 15px;
+    display: inline-block;
+    color: var(--text-time-color);
+    margin-bottom: 5px;
+}
+/* end content-items */
+
+/* end contents  */
+
+
+
+
+/* end content area */
 /* end main part */
 
 
 /* start times part */
 .times-container{
     width: 20%;
-    border-left: 1px solid var(--bg-navbar);
+    /* border-left: 1px solid var(--bg-navbar); */
+    box-shadow: -5px 0 20px rgba(0,0,0,0.1);
 }
 .times{
     padding: 20px;

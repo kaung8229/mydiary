@@ -67,6 +67,24 @@
         <!-- end history part -->
 
 
+        <!-- start Add data pop-up box -->
+        <div class="add-data-box-big-bg hide">
+                    
+            <div class="add-data-box">
+                <button type="button" class="btn-close">X</button>
+
+                <h3 class="title">What have you done today?</h3>
+
+                <form action="" method="">
+                    <textarea name="data-text" id="data-text" class="data-text" rows="5" placeholder="Write Down..." required></textarea>
+
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </div>
+
+        </div>
+        <!-- end Add data pop-up box -->
+
 
         <!-- start main part -->
         <main>
@@ -80,25 +98,69 @@
             <!-- start content area -->
             <div class="contents-container">
 
+                <!-- start empty-page -->
                 <div class="empty-page hide">
                     <div>
-                        <lord-icon
+                        <!-- <lord-icon
                             src="https://cdn.lordicon.com/wrprwmwt.json"
-                            trigger="hover"
+                            trigger="loop"
                             colors="primary:#121331,secondary:#08a88a">
-                        </lord-icon>
+                        </lord-icon> -->
                         <p>No Data</p>
                     </div>
                 </div>
+                <!-- end empty-page -->
 
+
+                <!-- start add button -->
                 <button type="button" class="data-add-btn">
-                    <div class="tooltip">
+                    <div class="tooltip hide">
                        <h3>What have you done now?</h3>
                        <p>Write down things that have you done today.</p>
                        <i class="tooltip-arrow"></i>
                     </div>
                     Add
                 </button>
+                <!-- end add button -->
+
+
+                <!-- start contents  -->
+                <div class="contents">
+
+                    <h3 class="title">Things that I have DONE.</h3>
+
+                    <!-- start content-items -->
+                    <div class="contentItem-container">
+                        <div class="content-item">
+                            <span id="time-text" class="time-text">9:40 am</span>
+                            <p class="content-text">
+                                I study 8:30 to 10:00.
+                            </p>
+                        </div>
+                        <div class="content-item">
+                            <span id="time-text" class="time-text">9:40 am</span>
+                            <p class="content-text">
+                                I study 8:30 to 10:00.
+                            </p>
+                        </div>
+                        <div class="content-item">
+                            <span id="time-text" class="time-text">9:40 am</span>
+                            <p class="content-text">
+                                I study 8:30 to 10:00.
+                            </p>
+                        </div>
+                        <div class="content-item">
+                            <span id="time-text" class="time-text">9:40 am</span>
+                            <p class="content-text">
+                                I study 8:30 to 10:00.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end content-items -->
+
+                </div>
+                <!-- end contents  -->
+
 
             </div>
             <!-- end content area -->
