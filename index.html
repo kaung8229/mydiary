@@ -99,7 +99,7 @@
             <div class="contents-container">
 
                 <!-- start empty-page -->
-                <div class="empty-page hide">
+                <div id="empty-page" class="empty-page">
                     <div>
                         <!-- <lord-icon
                             src="https://cdn.lordicon.com/wrprwmwt.json"
@@ -112,18 +112,6 @@
                 <!-- end empty-page -->
 
 
-                <!-- start add button -->
-                <button type="button" class="data-add-btn">
-                    <div class="tooltip hide">
-                       <h3>What have you done now?</h3>
-                       <p>Write down things that have you done today.</p>
-                       <i class="tooltip-arrow"></i>
-                    </div>
-                    Add
-                </button>
-                <!-- end add button -->
-
-
                 <!-- start contents  -->
                 <div class="contents">
 
@@ -131,32 +119,26 @@
 
                     <!-- start content-items -->
                     <div class="contentItem-container">
-                        <div class="content-item">
-                            <span id="time-text" class="time-text">9:40 am</span>
+                        <!-- <div class="content-item">
+                            <span class="time-text">9:40 am</span>
                             <p class="content-text">
                                 I study 8:30 to 10:00.
                             </p>
-                        </div>
-                        <div class="content-item">
-                            <span id="time-text" class="time-text">9:40 am</span>
-                            <p class="content-text">
-                                I study 8:30 to 10:00.
-                            </p>
-                        </div>
-                        <div class="content-item">
-                            <span id="time-text" class="time-text">9:40 am</span>
-                            <p class="content-text">
-                                I study 8:30 to 10:00.
-                            </p>
-                        </div>
-                        <div class="content-item">
-                            <span id="time-text" class="time-text">9:40 am</span>
-                            <p class="content-text">
-                                I study 8:30 to 10:00.
-                            </p>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- end content-items -->
+
+
+                    <!-- start add button -->
+                    <button type="button" id="data-add-btn" class="data-add-btn">
+                        <div id="tooltip" class="tooltip hide">
+                        <h3>What have you done now?</h3>
+                        <p>Write down things that have you done today.</p>
+                        <i class="tooltip-arrow"></i>
+                        </div>
+                        Add
+                    </button>
+                    <!-- end add button -->
 
                 </div>
                 <!-- end contents  -->
