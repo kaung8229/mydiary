@@ -3,18 +3,7 @@
 var uiyearbtn = document.querySelector('.year-btn');
 var uiyears = document.querySelectorAll('.years');
 
-var uimonthbtns = document.querySelectorAll('.month-btn');
-var uidaycontainers = document.querySelectorAll('.days-container');
-var uidaybtns = document.querySelectorAll('.day-btn');
-
-alwaysactive();
-
-function alwaysactive(){
-    uiyears[uiyears.length-1].classList.add('active');
-    uimonthbtns[uimonthbtns.length-1].classList.add("active");
-    uidaybtns[uidaybtns.length-1].classList.add("active");
-    uidaycontainers[uidaycontainers.length-1].style.height = uidaycontainers[uidaycontainers.length-1].scrollHeight + "px";
-}
+var uimonthcontainer = document.querySelector('.month-container');
 
 // start year
 uiyearbtn.onclick = function(){
@@ -36,41 +25,55 @@ uiyears.forEach(uiyear=>{
 
 // start months & days
 
-uimonthbtns.forEach(uimonthbtn=>{
-    uimonthbtn.addEventListener('click',function(){
-        // console.log(monthbtn.nextElementSibling.scrollHeight);
-        
-        uidaycontainers.forEach(uidaycontainer=>{
-            uidaycontainer.style.height = 0 + "px";
-        })
+function monthdayhis(){
 
-        uimonthbtn.classList.toggle("active");
-        
-        if(uimonthbtn.classList.contains('active')){
-            uimonthbtn.nextElementSibling.style.height = uimonthbtn.nextElementSibling.scrollHeight + "px";
-        }else{
-            uimonthbtn.nextElementSibling.style.height = 0 + "px";
-        }
+    var uimonthbtns = document.querySelectorAll('.month-btn');
+    var uidaycontainers = document.querySelectorAll('.days-container');
+    var uidaybtns = document.querySelectorAll('.day-btn');
 
-        uimonthbtns.forEach(uimonthbtn=>{
+    uimonthbtns.forEach(uimonthbtn=>{
+        uimonthbtn.addEventListener('click',function(){
+            // console.log(monthbtn.nextElementSibling.scrollHeight);
+            
+            uidaycontainers.forEach(uidaycontainer=>{
+                uidaycontainer.style.height = 0 + "px";
+            })
+    
+            uimonthbtn.classList.toggle("active");
+            
             if(uimonthbtn.classList.contains('active')){
                 uimonthbtn.nextElementSibling.style.height = uimonthbtn.nextElementSibling.scrollHeight + "px";
             }else{
                 uimonthbtn.nextElementSibling.style.height = 0 + "px";
             }
+    
+            uimonthbtns.forEach(uimonthbtn=>{
+                if(uimonthbtn.classList.contains('active')){
+                    uimonthbtn.nextElementSibling.style.height = uimonthbtn.nextElementSibling.scrollHeight + "px";
+                }else{
+                    uimonthbtn.nextElementSibling.style.height = 0 + "px";
+                }
+            })
+    
         })
-
-    })
-});
-
-uidaybtns.forEach(uidaybtn=>{
-    uidaybtn.addEventListener("click",function(){
-        uidaybtns.forEach(uidaybtn=>{
-            uidaybtn.classList.remove('active');
+    });
+    
+    uidaybtns.forEach(uidaybtn=>{
+        uidaybtn.addEventListener("click",function(){
+            uidaybtns.forEach(uidaybtn=>{
+                uidaybtn.classList.remove('active');
+            })
+            uidaybtn.classList.add("active");
         })
-        uidaybtn.classList.add("active");
     })
-})
+
+    uiyears[uiyears.length-1].classList.add('active');
+    uimonthbtns[uimonthbtns.length-1].classList.add("active");
+    uidaybtns[uidaybtns.length-1].classList.add("active");
+    uidaycontainers[uidaycontainers.length-1].style.height = uidaycontainers[uidaycontainers.length-1].scrollHeight + "px";
+
+}
+
 // end months & days
 
 // end history
@@ -161,27 +164,227 @@ submitbtn.addEventListener('click',function(e){
 
 })
 
+var dtimes = [];
+var dtexts = [];
+var dmonths = [];
+var ddays = [];
+var dlearns = [];
+var dstudys = [];
+
+var datas = [];
+var datanew = [];
+
 
 function addnewdata(addtime,datatext){
+
     // console.log(addtime);
     // console.log(datatext);
+    
+    var datalses = JSON.parse(localStorage.getItem('datas'));
+    // console.log(datalses);
+
+    let monthnow = new Date().getMonth() + 1;
+    let daynow = new Date().getDate();
+    // console.log(monthnow);
+    // console.log(daynow);
+
+    dtimes.push(addtime)
+    dtexts.push(datatext);
 
     var dataobj = {
-        time: addtime,
-        text: datatext
+        time: dtimes,
+        text: dtexts,
+        month: dmonths,
+        day: ddays,
+        learn: learn,
+        study: study
     };
     // console.log(dataobj);
+    // console.log(datatexts);
+    // console.log(datas);
 
-    let contenttextel = document.createElement('div');
-    contenttextel.className = "content-item";
+    if(datalses != null){
 
-    contenttextel.innerHTML = `
-        <span class="time-text">${dataobj.time}</span>
-        <p class="content-text">${dataobj.text}</p>
+        datalses.forEach(datals=>{
+            // console.log(datals.day);
+
+            if(datals.month[datals.month.length - 1] != monthnow){
+                dmonths.push(monthnow);
+
+                if(datals.day[datals.day.length - 1] != daynow){
+                    ddays.push(daynow);
+                }
+            }else{
+                if(datals.day[datals.day.length - 1] == daynow){
+                    console.log("day is same");
+                    datals.time = dataobj.time;
+                    datals.text = dataobj.text;
+                    datals.learn = learn;
+                    datals.study = study;
+                    datanew[datanew.length - 1] = datals;
+                    localStorage.setItem('datas',JSON.stringify(datanew));
+                    // console.log(datanew);
+                    // console.log(datals);
+                    adddatatohtml(datals);
+                }
+            }
+
+        })
+
+    }else{
+        dmonths.push(monthnow);
+        ddays.push(daynow);
+        datas.push(dataobj);
+        datanew.push(dataobj);
+        localStorage.setItem('datas',JSON.stringify(datas));
+
+        let contenttextel = document.createElement('div');
+        contenttextel.className = "content-item";
+
+        contenttextel.innerHTML = `
+            <span class="time-text">${dataobj.time[0]}</span>
+            <p class="content-text">${dataobj.text[0]}</p>
+        `;
+        // console.log(contenttextel);
+
+        contentItemcontainer.append(contenttextel);
+
+    }
+
+}
+
+function adddatatohtml(obj){
+
+    // console.log(obj.text);
+    var objtimes = obj.time;
+    var objtexts = obj.text;
+
+    contentItemcontainer.innerHTML = '';
+
+    for(let i=0; i<objtimes.length; i++){
+
+        // console.log(objtimes[i]);
+        // console.log(objtexts[i]);
+
+        let contenttextel = document.createElement('div');
+        contenttextel.className = "content-item";
+
+        contenttextel.innerHTML = `
+            <span class="time-text">${objtimes[i]}</span>
+            <p class="content-text">${objtexts[i]}</p>
+        `;
+        // console.log(contenttextel);
+        contentItemcontainer.append(contenttextel);
+
+    }
+    
+
+}
+
+
+
+function currenttimeonce(){
+
+    let curmonth = new Date().getMonth() + 1;
+    let curday = new Date().getDate();
+
+    var curmdel = document.createElement('li');
+    curmdel.className = 'month-item';
+
+    curmdel.innerHTML = `
+        <a href="javascript:void(0);" class="month-btn">
+            <p>${curmonth} month</p>
+            <ion-icon name="caret-down-outline" class="dropdown-icon"></ion-icon>
+        </a>
+
+        <ul class="days-container">
+            <li class="day-item">
+                <a href="javascript:void(0);" class="day-btn">
+                    <p>${curday} - ${curmonth}</p>
+                    <ion-icon name="caret-forward-outline"></ion-icon>
+                </a>
+            </li>
+        </ul>
     `;
-    // console.log(contenttextel);
 
-    contentItemcontainer.append(contenttextel);
+    // console.log(curmdel);
+    uimonthcontainer.append(curmdel);
+
+}
+
+
+var datalses = JSON.parse(localStorage.getItem('datas'));
+// console.log(datalses);
+
+if(datalses != null){
+    bringlsdata(datalses);
+}else{
+    currenttimeonce();
+    monthdayhis();
+}
+
+
+function bringlsdata(lsdatas){
+    uimonthcontainer.innerHTML = '';
+    lsdatas.forEach(lsdata=>{
+        var lsdatamonths = lsdata.month;
+        var lsdatadays = lsdata.day;
+
+        for(let m=0; m<lsdatamonths.length; m++){
+
+            var lsdatamel = document.createElement('li');
+            lsdatamel.className = 'month-item';
+
+            var htmltexts = [`
+                <a href="javascript:void(0);" class="month-btn">
+                    <p>${lsdatamonths[m]} month</p>
+                    <ion-icon name="caret-down-outline" class="dropdown-icon"></ion-icon>
+                </a>
+
+                <ul class="days-container">
+            `];
+            
+
+            // <ul class="days-container">
+            //     <li class="day-item">
+            //         <a href="javascript:void(0);" class="day-btn">
+            //             <p>${curday} - ${curmonth}</p>
+            //             <ion-icon name="caret-forward-outline"></ion-icon>
+            //         </a>
+            //     </li>
+            // </ul>
+
+            for(let d=0; d<lsdatadays.length; d++){
+
+                var lsdatadel = `
+                    <li class="day-item">
+                        <a href="javascript:void(0);" class="day-btn">
+                            <p>${lsdatadays[d]} - ${lsdatamonths[m]}</p>
+                            <ion-icon name="caret-forward-outline"></ion-icon>
+                        </a>
+                    </li>
+                `;
+
+                htmltexts.push(lsdatadel);
+            }
+
+            htmltexts[htmltexts.length] = "</ul>";
+
+            // console.log(htmltexts.join(''));
+
+            lsdatamel.innerHTML = htmltexts.join('');
+
+            // console.log(lsdatamel);
+            uimonthcontainer.append(lsdatamel);
+
+        }
+
+        adddatatohtml(lsdata);
+        emptypagehide();
+        
+    })
+
+    monthdayhis();
 
 }
 
