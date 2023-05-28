@@ -164,15 +164,49 @@ submitbtn.addEventListener('click',function(e){
 
 })
 
-var dtimes = [];
-var dtexts = [];
-var dmonths = [];
-var ddays = [];
-var dlearns = [];
-var dstudys = [];
 
-var datas = [];
-var datanew = [];
+
+
+var datalses = JSON.parse(localStorage.getItem('datas'));
+// console.log(datalses);
+
+if(datalses != null){
+    var datalslast = datalses[datalses.length - 1];
+    // console.log(datalslast);
+
+    var times = datalslast.time[datalslast.time.length - 1];
+    var texts = datalslast.text[datalslast.text.length - 1];
+
+    // console.log(times);
+    // console.log(texts);
+
+    var dtimes = datalslast.time;
+    var dtexts = datalslast.text;
+    var dmonths = datalslast.month;
+    var ddays = datalslast.day;
+    var dlearns = datalslast.learn;
+    var dstudys = datalslast.study;
+
+    var datanew = datalses;
+    bringlsdata(datalses);
+    newdate(datalses);
+}else{
+    var times = [];
+    var texts = [];
+
+    var dtimes = [];
+    var dtexts = [];
+    var dmonths = '';
+    var ddays = [];
+    var dlearns = [];
+    var dstudys = [];
+
+    var datas = [];
+    var datanew = [];
+
+    currenttimeonce();
+    monthdayhis();
+}
 
 
 function addnewdata(addtime,datatext){
@@ -184,12 +218,27 @@ function addnewdata(addtime,datatext){
     // console.log(datalses);
 
     let monthnow = new Date().getMonth() + 1;
+    // let monthnow = 6;
     let daynow = new Date().getDate();
+    // let daynow = 28;
     // console.log(monthnow);
     // console.log(daynow);
 
-    dtimes.push(addtime)
-    dtexts.push(datatext);
+    times.push(addtime);
+    texts.push(datatext);
+
+
+    // console.log(dtimes);
+    // console.log(dtexts);
+
+    if(dtimes.length == 0 && dtexts.length == 0){
+        dtimes.push(times);
+        dtexts.push(texts);
+    }else{
+        dtimes[dtimes.length-1] = times;
+        dtexts[dtexts.length-1] = texts;
+    }
+    
 
     var dataobj = {
         time: dtimes,
@@ -205,35 +254,105 @@ function addnewdata(addtime,datatext){
 
     if(datalses != null){
 
-        datalses.forEach(datals=>{
-            // console.log(datals.day);
+        // console.log(datalses[datalses.length-1]);
 
-            if(datals.month[datals.month.length - 1] != monthnow){
-                dmonths.push(monthnow);
+        var datals = datalses[datalses.length-1];
 
-                if(datals.day[datals.day.length - 1] != daynow){
-                    ddays.push(daynow);
-                }
+        // console.log(datals);
+
+        // console.log(datanew);
+        // console.log(datals.month);
+        // console.log(datals.month[datals.month.length - 1]);
+        // console.log(monthnow);
+
+        if(datals.month != monthnow){
+
+            // console.log('month is not same');
+            dtexts[dtexts.length-2].pop();
+            dataobj.text = dtexts;
+
+            ddays = [];
+            dtimes = [];
+            dtexts = [];
+            times = [];
+            texts = [];
+
+            dataobj.month = monthnow;
+            ddays.push(daynow);
+            times.push(addtime);
+            texts.push(datatext);
+
+            if(dtimes.length == 0 && dtexts.length == 0){
+                dtimes.push(times);
+                dtexts.push(texts);
             }else{
-                if(datals.day[datals.day.length - 1] == daynow){
-                    console.log("day is same");
-                    datals.time = dataobj.time;
-                    datals.text = dataobj.text;
-                    datals.learn = learn;
-                    datals.study = study;
-                    datanew[datanew.length - 1] = datals;
-                    localStorage.setItem('datas',JSON.stringify(datanew));
-                    // console.log(datanew);
-                    // console.log(datals);
-                    adddatatohtml(datals);
-                }
+                dtimes[dtimes.length-1] = times;
+                dtexts[dtexts.length-1] = texts;
             }
 
-        })
+            dataobj.day = ddays;
+            dataobj.time = dtimes;
+            dataobj.text = dtexts;
+            newdata(datals,dataobj,datanew,learn,study,daynow,monthnow);
 
+        }else{
+            
+            overridedata(datals,dataobj,datanew,learn,study);
+
+            if(datals.day[datals.day.length - 1] == daynow){
+
+                // console.log("day is same");
+                dataobj.month = monthnow;
+                overridedata(datals,dataobj,datanew,learn,study);
+
+            }else{
+
+                
+
+                // console.log("day is not same");
+                // console.log(datals.text);
+
+                dataobj.month = monthnow;
+                ddays.push(daynow);
+
+                times = [];
+                texts = [];
+
+                times.push(addtime);
+                texts.push(datatext);
+
+                // console.log(texts);
+                // console.log(dtexts);
+
+                dtimes.push(times);
+                dtexts.push(texts);
+
+                // console.log(dtexts.length);
+                if(dtexts.length != 1){
+                    dtexts[dtexts.length-2].pop();
+                }
+
+                var datanewobj = {
+                    time: dtimes,
+                    text: dtexts
+                };
+
+                // console.log(datanewobj.text);
+
+                dataobj = Object.assign({},dataobj,datanewobj);
+                // console.log(dataobj);
+
+                // newdata(datals,dataobj,datanew,learn,study,daynow,monthnow);
+                overridedata(datals,dataobj,datanew,learn,study);
+
+                // console.log(datals.text);
+
+            }
+        }
     }else{
-        dmonths.push(monthnow);
+        dataobj.month = monthnow;
         ddays.push(daynow);
+        console.log(dataobj);
         datas.push(dataobj);
         datanew.push(dataobj);
         localStorage.setItem('datas',JSON.stringify(datas));
@@ -253,11 +372,40 @@ function addnewdata(addtime,datatext){
 
 }
 
+function newdata(datals,dataobj,datanew,learn,study,daynow,monthnow){
+
+    datals.time = dataobj.time;
+    datals.text = dataobj.text;
+    datals.month = dataobj.month;
+    datals.day = dataobj.day;
+    datals.learn = learn;
+    datals.study = study;
+    datanew.push(datals);
+    // datanew[datanew.length - 1] = datals;
+    localStorage.setItem('datas',JSON.stringify(datanew));
+    adddatatohtml(datals);
+
+}
+
+function overridedata(datals,dataobj,datanew,learn,study){
+
+    datals.time = dataobj.time;
+    datals.text = dataobj.text;
+    datals.month = dataobj.month;
+    datals.day = dataobj.day;
+    datals.learn = learn;
+    datals.study = study;
+    datanew[datanew.length - 1] = datals;
+    localStorage.setItem('datas',JSON.stringify(datanew));
+    adddatatohtml(datals);
+
+}
+
 function adddatatohtml(obj){
 
     // console.log(obj.text);
-    var objtimes = obj.time;
-    var objtexts = obj.text;
+    var objtimes = obj.time[obj.time.length-1];
+    var objtexts = obj.text[obj.text.length-1];
 
     contentItemcontainer.innerHTML = '';
 
@@ -313,84 +461,69 @@ function currenttimeonce(){
 }
 
 
-var datalses = JSON.parse(localStorage.getItem('datas'));
-// console.log(datalses);
-
-if(datalses != null){
-    bringlsdata(datalses);
-}else{
-    currenttimeonce();
-    monthdayhis();
-}
-
-
 function bringlsdata(lsdatas){
     uimonthcontainer.innerHTML = '';
-    lsdatas.forEach(lsdata=>{
-        var lsdatamonths = lsdata.month;
-        var lsdatadays = lsdata.day;
 
-        for(let m=0; m<lsdatamonths.length; m++){
+    var lsdatadays = lsdatas[lsdatas.length-1].day;
 
-            var lsdatamel = document.createElement('li');
-            lsdatamel.className = 'month-item';
+    for(var l=0; l<lsdatas.length; l++){
 
-            var htmltexts = [`
-                <a href="javascript:void(0);" class="month-btn">
-                    <p>${lsdatamonths[m]} month</p>
-                    <ion-icon name="caret-down-outline" class="dropdown-icon"></ion-icon>
-                </a>
+        var lsdatamel = document.createElement('li');
+        lsdatamel.className = 'month-item';
 
-                <ul class="days-container">
-            `];
-            
+        var htmltexts = [`
+            <a href="javascript:void(0);" class="month-btn">
+                <p>${lsdatas[l].month} month</p>
+                <ion-icon name="caret-down-outline" class="dropdown-icon"></ion-icon>
+            </a>
 
-            // <ul class="days-container">
-            //     <li class="day-item">
-            //         <a href="javascript:void(0);" class="day-btn">
-            //             <p>${curday} - ${curmonth}</p>
-            //             <ion-icon name="caret-forward-outline"></ion-icon>
-            //         </a>
-            //     </li>
-            // </ul>
+            <ul class="days-container">
+        `];
 
-            for(let d=0; d<lsdatadays.length; d++){
+        for(let d=0; d<lsdatadays.length; d++){
 
-                var lsdatadel = `
-                    <li class="day-item">
-                        <a href="javascript:void(0);" class="day-btn">
-                            <p>${lsdatadays[d]} - ${lsdatamonths[m]}</p>
-                            <ion-icon name="caret-forward-outline"></ion-icon>
-                        </a>
-                    </li>
-                `;
+            var lsdatadel = `
+                <li class="day-item">
+                    <a href="javascript:void(0);" class="day-btn">
+                        <p>${lsdatadays[d]} - ${lsdatas[l].month}</p>
+                        <ion-icon name="caret-forward-outline"></ion-icon>
+                    </a>
+                </li>
+            `;
 
-                htmltexts.push(lsdatadel);
-            }
-
-            htmltexts[htmltexts.length] = "</ul>";
-
-            // console.log(htmltexts.join(''));
-
-            lsdatamel.innerHTML = htmltexts.join('');
-
-            // console.log(lsdatamel);
-            uimonthcontainer.append(lsdatamel);
-
+            htmltexts.push(lsdatadel);
         }
 
-        adddatatohtml(lsdata);
-        emptypagehide();
-        
-    })
+        htmltexts[htmltexts.length] = "</ul>";
+        // console.log(htmltexts.join(''));
+        lsdatamel.innerHTML = htmltexts.join('');
+
+        // console.log(lsdatamel);
+        uimonthcontainer.append(lsdatamel);
+
+    }
+
+    adddatatohtml(lsdatas[lsdatas.length-1]);
+    emptypagehide();
+    
 
     monthdayhis();
 
 }
+
+
+function newdate(dataobj){
+
+    // console.log(dataobj);
+
+}
+
 
 
 function adddataboxshow(){
     adddatabox.classList.remove('hide');
+    datatext.value = '';
+    datatext.focus();
 }
 
 function adddataboxhide(){
@@ -405,4 +538,9 @@ function emptypagehide(){
 
 
 // end main part
+
+
+
+
+// 26PHP
 
