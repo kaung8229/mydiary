@@ -442,6 +442,8 @@ main{
     position: relative;
     width: 100%;
     height: calc(100% - 20px);
+
+    overflow-y: auto;
 }
 
 .content-item{

@@ -189,6 +189,27 @@ if(datalses != null){
 
     bringlsdata(datalses);
     newdate(datalses);
+
+    var daybtns = document.querySelectorAll('.day-btn');
+    // console.log(daybtns);
+
+    for(let b=0; b<daybtns.length; b++){
+
+        daybtns[b].addEventListener('click',function(){
+            // console.log(b);
+            // console.log(this.children[0].children[0].textContent);
+
+            var clickday = this.children[0].children[0].textContent;
+            var clickmonth = this.children[0].children[1].textContent;
+            // console.log(clickday);
+            // console.log(clickmonth);
+
+            showbyhistory(datalses,clickday,clickmonth);
+
+        })
+
+    }
+
 }else{
     
     var learn = 0;
@@ -209,10 +230,13 @@ if(datalses != null){
 
     currenttimeonce();
     monthdayhis();
+    tooltipshow();
 }
 
 
 function addnewdata(addtime,datatext){
+
+    tooltiphide();
 
     // console.log(addtime);
     // console.log(datatext);
@@ -223,7 +247,7 @@ function addnewdata(addtime,datatext){
     let monthnow = new Date().getMonth() + 1;
     // let monthnow = 6;
     let daynow = new Date().getDate();
-    // let daynow = 30;
+    // let daynow = 31;
     // console.log(monthnow);
     // console.log(daynow);
 
@@ -450,10 +474,10 @@ function overridedata(datals,dataobj,datanew,learn,study){
 
 function adddatatohtml(obj){
 
+    // console.log(obj);
+
     lntime.innerHTML = obj.learn[obj.learn.length-1];
     sttime.innerHTML = obj.study[obj.study.length-1];
-
-    // console.log(obj);
     var objtimes = obj.time[obj.time.length-1];
     var objtexts = obj.text[obj.text.length-1];
 
@@ -475,7 +499,69 @@ function adddatatohtml(obj){
         contentItemcontainer.append(contenttextel);
 
     }
+
+}
+
+
+function showbyhistory(objs,clickday,clickmonth){
+
+    // console.log(objs);
+
+    var curobj = '';
+
+    objs.forEach(obj=>{
+        var objdays = obj.day;
+        var objmonth = obj.month;
+        // console.log(objday);
+        // console.log(objmonth);
+        
+        var curobjday = objdays.filter(objday=>{
+            return objday == clickday;
+        });
+        // console.log(curobjday);
+
+        if(curobjday[0] == clickday && objmonth == clickmonth){
+            // console.log(obj);
+            curobj = obj;
+        }
+
+    })
+    // console.log(curobj);
+
+    // console.log(curobj.day);
+    // console.log(clickday);
+
+    if(curobj){
+        maintitle.innerHTML = `${clickday} - ${clickmonth}`;
+
+        var curidx = curobj.day.indexOf(+clickday);
     
+        // console.log(curidx);
+
+        var hisobj = {
+            time: [curobj.time[curidx]],
+            text: [curobj.text[curidx]],
+            month: curobj.month,
+            day: [curobj.day[curidx]],
+            learn: [curobj.learn[curidx]],
+            study: [curobj.study[curidx]]
+        };
+
+        // console.log(hisobj);
+
+        adddatatohtml(hisobj);
+        emptypagehide();
+        tooltiphide();
+    }else{
+        // console.log("nothgin");
+        maintitle.innerHTML = `Today`;
+
+        contentItemcontainer.innerHTML = '';
+        lntime.innerHTML = 0;
+        sttime.innerHTML = 0;
+        emptypageshow();
+        tooltipshow();
+    }
 
 }
 
@@ -499,7 +585,7 @@ function currenttimeonce(){
         <ul class="days-container">
             <li class="day-item">
                 <a href="javascript:void(0);" class="day-btn">
-                    <p>${curday} - ${curmonth}</p>
+                    <p><span class="autoday">${curday}</span> - <span class="automonth">${curmonth}</span></p>
                     <ion-icon name="caret-forward-outline"></ion-icon>
                 </a>
             </li>
@@ -537,7 +623,7 @@ function bringlsdata(lsdatas){
             var lsdatadel = `
                 <li class="day-item">
                     <a href="javascript:void(0);" class="day-btn">
-                        <p>${lsdatadays[d]} - ${lsdatas[l].month}</p>
+                        <p><span class="autoday">${lsdatadays[d]}</span> - <span class="automonth">${lsdatas[l].month}</span></p>
                         <ion-icon name="caret-forward-outline"></ion-icon>
                     </a>
                 </li>
@@ -571,7 +657,7 @@ function newdate(dataobj){
     var newcurmonth = new Date().getMonth() + 1;
     // var newcurmonth = 6;
     var newcurday = new Date().getDate();
-    // var newcurday = 30;
+    // var newcurday = 31;
 
     // console.log(curmonth);
     // console.log(curday);
@@ -601,7 +687,7 @@ function newdate(dataobj){
             <ul class="days-container">
                 <li class="day-item">
                     <a href="javascript:void(0);" class="day-btn">
-                        <p>${newcurday} - ${newcurmonth}</p>
+                        <p><span class="autoday">${newcurday}</span> - <span class="automonth">${newcurmonth}</span></p>
                         <ion-icon name="caret-forward-outline"></ion-icon>
                     </a>
                 </li>
@@ -614,6 +700,7 @@ function newdate(dataobj){
         contentItemcontainer.innerHTML = '';
 
         emptypageshow();
+        tooltipshow();
     }else if(curdata.day[curdata.day.length-1] != newcurday){
 
         learn = 0;
@@ -629,7 +716,7 @@ function newdate(dataobj){
 
         curdel.innerHTML = `
             <a href="javascript:void(0);" class="day-btn">
-                <p>${newcurday} - ${newcurmonth}</p>
+                <p><span class="autoday">${newcurday}</span> - <span class="automonth">${newcurmonth}</span></p>
                 <ion-icon name="caret-forward-outline"></ion-icon>
             </a>
         `;
@@ -639,6 +726,7 @@ function newdate(dataobj){
         contentItemcontainer.innerHTML = '';
 
         emptypageshow();
+        tooltipshow();
     }
 
     monthdayhis();
@@ -666,7 +754,15 @@ function emptypageshow(){
     emptypage.classList.remove('hide');
 }
 
+function tooltipshow(){
+    tooltip.classList.remove("hide");
+    tooltip.classList.add("animate");
+}
 
+function tooltiphide(){
+    tooltip.classList.add("hide");
+    tooltip.classList.remove("animate");
+}
 
 
 
