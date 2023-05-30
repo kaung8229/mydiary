@@ -100,10 +100,6 @@ var lntime = document.querySelector('.ln-time');
 var sttime = document.querySelector('.st-time');
 
 
-var learn = 0;
-var study = 0;
-
-
 dataaddbtn.addEventListener('click',function(){
     adddataboxshow();
 })
@@ -174,6 +170,9 @@ if(datalses != null){
     var datalslast = datalses[datalses.length - 1];
     // console.log(datalslast);
 
+    var learn = datalslast.learn[datalslast.learn.length - 1];
+    var study = datalslast.study[datalslast.study.length - 1];
+
     var times = datalslast.time[datalslast.time.length - 1];
     var texts = datalslast.text[datalslast.text.length - 1];
 
@@ -186,11 +185,15 @@ if(datalses != null){
     var ddays = datalslast.day;
     var dlearns = datalslast.learn;
     var dstudys = datalslast.study;
-
     var datanew = datalses;
+
     bringlsdata(datalses);
     newdate(datalses);
 }else{
+    
+    var learn = 0;
+    var study = 0;
+
     var times = [];
     var texts = [];
 
@@ -220,13 +223,12 @@ function addnewdata(addtime,datatext){
     let monthnow = new Date().getMonth() + 1;
     // let monthnow = 6;
     let daynow = new Date().getDate();
-    // let daynow = 28;
+    // let daynow = 30;
     // console.log(monthnow);
     // console.log(daynow);
 
     times.push(addtime);
     texts.push(datatext);
-
 
     // console.log(dtimes);
     // console.log(dtexts);
@@ -238,15 +240,14 @@ function addnewdata(addtime,datatext){
         dtimes[dtimes.length-1] = times;
         dtexts[dtexts.length-1] = texts;
     }
-    
 
     var dataobj = {
         time: dtimes,
         text: dtexts,
         month: dmonths,
         day: ddays,
-        learn: learn,
-        study: study
+        learn: dlearns,
+        study: dstudys
     };
     // console.log(dataobj);
     // console.log(datatexts);
@@ -257,7 +258,6 @@ function addnewdata(addtime,datatext){
         // console.log(datalses[datalses.length-1]);
 
         var datals = datalses[datalses.length-1];
-
         // console.log(datals);
 
         // console.log(datanew);
@@ -268,17 +268,37 @@ function addnewdata(addtime,datatext){
         if(datals.month != monthnow){
 
             // console.log('month is not same');
-            dtexts[dtexts.length-2].pop();
+            dtimes[dtimes.length-1].pop();
+            dataobj.time = dtimes;
+
+            dtexts[dtexts.length-1].pop();
             dataobj.text = dtexts;
 
             ddays = [];
             dtimes = [];
             dtexts = [];
+            dlearns = [];
+            dstudys = [];
+
+            learn = 0;
+            study = 0;
+
+            if(datatext.includes("learn")){
+                learn += 1;
+            }
+    
+            if(datatext.includes("study")){
+                study += 1;
+            }
+
             times = [];
             texts = [];
 
             dataobj.month = monthnow;
             ddays.push(daynow);
+            dlearns.push(learn);
+            dstudys.push(study);
+
             times.push(addtime);
             texts.push(datatext);
 
@@ -293,22 +313,32 @@ function addnewdata(addtime,datatext){
             dataobj.day = ddays;
             dataobj.time = dtimes;
             dataobj.text = dtexts;
+            dataobj.learn = dlearns;
+            dataobj.study = dstudys;
             newdata(datals,dataobj,datanew,learn,study,daynow,monthnow);
 
         }else{
             
-            overridedata(datals,dataobj,datanew,learn,study);
+            // overridedata(datals,dataobj,datanew,learn,study);
 
             if(datals.day[datals.day.length - 1] == daynow){
 
                 // console.log("day is same");
                 dataobj.month = monthnow;
+
+                // console.log(study);
+                // console.log(learn);
+                // console.log(dstudys);
+
+                dlearns[dlearns.length-1] = learn;
+                dataobj.learn = dlearns;
+
+                dstudys[dstudys.length-1] = study;
+                dataobj.study = dstudys;
+
                 overridedata(datals,dataobj,datanew,learn,study);
 
             }else{
-
-                
-
                 // console.log("day is not same");
                 // console.log(datals.text);
 
@@ -326,15 +356,22 @@ function addnewdata(addtime,datatext){
 
                 dtimes.push(times);
                 dtexts.push(texts);
+                dlearns.push(learn);
+                dstudys.push(study);
 
                 // console.log(dtexts.length);
                 if(dtexts.length != 1){
                     dtexts[dtexts.length-2].pop();
                 }
+                if(dtimes.length != 1){
+                    dtimes[dtimes.length-2].pop();
+                }
 
                 var datanewobj = {
                     time: dtimes,
-                    text: dtexts
+                    text: dtexts,
+                    learn: dlearns,
+                    study: dstudys
                 };
 
                 // console.log(datanewobj.text);
@@ -352,10 +389,18 @@ function addnewdata(addtime,datatext){
     }else{
         dataobj.month = monthnow;
         ddays.push(daynow);
-        console.log(dataobj);
+
+        dlearns.push(learn);
+        dstudys.push(study);
+
         datas.push(dataobj);
         datanew.push(dataobj);
+        // console.log(dataobj);
+
         localStorage.setItem('datas',JSON.stringify(datas));
+
+        lntime.innerHTML = learn;
+        sttime.innerHTML = study;
 
         let contenttextel = document.createElement('div');
         contenttextel.className = "content-item";
@@ -378,8 +423,8 @@ function newdata(datals,dataobj,datanew,learn,study,daynow,monthnow){
     datals.text = dataobj.text;
     datals.month = dataobj.month;
     datals.day = dataobj.day;
-    datals.learn = learn;
-    datals.study = study;
+    datals.learn = dataobj.learn;
+    datals.study = dataobj.study;
     datanew.push(datals);
     // datanew[datanew.length - 1] = datals;
     localStorage.setItem('datas',JSON.stringify(datanew));
@@ -389,12 +434,14 @@ function newdata(datals,dataobj,datanew,learn,study,daynow,monthnow){
 
 function overridedata(datals,dataobj,datanew,learn,study){
 
+    // console.log("OOB",dataobj);
+
     datals.time = dataobj.time;
     datals.text = dataobj.text;
     datals.month = dataobj.month;
     datals.day = dataobj.day;
-    datals.learn = learn;
-    datals.study = study;
+    datals.learn = dataobj.learn;
+    datals.study = dataobj.study;
     datanew[datanew.length - 1] = datals;
     localStorage.setItem('datas',JSON.stringify(datanew));
     adddatatohtml(datals);
@@ -403,7 +450,10 @@ function overridedata(datals,dataobj,datanew,learn,study){
 
 function adddatatohtml(obj){
 
-    // console.log(obj.text);
+    lntime.innerHTML = obj.learn[obj.learn.length-1];
+    sttime.innerHTML = obj.study[obj.study.length-1];
+
+    // console.log(obj);
     var objtimes = obj.time[obj.time.length-1];
     var objtexts = obj.text[obj.text.length-1];
 
@@ -428,6 +478,7 @@ function adddatatohtml(obj){
     
 
 }
+
 
 
 
@@ -462,11 +513,12 @@ function currenttimeonce(){
 
 
 function bringlsdata(lsdatas){
+    // console.log(lsdatas)
     uimonthcontainer.innerHTML = '';
-
-    var lsdatadays = lsdatas[lsdatas.length-1].day;
-
+    
     for(var l=0; l<lsdatas.length; l++){
+
+        var lsdatadays = lsdatas[l].day;
 
         var lsdatamel = document.createElement('li');
         lsdatamel.className = 'month-item';
@@ -507,14 +559,90 @@ function bringlsdata(lsdatas){
     emptypagehide();
     
 
-    monthdayhis();
+    // monthdayhis();
 
 }
 
 
 function newdate(dataobj){
+    // console.log(dataobj[dataobj.length-1]);
+    var curdata = dataobj[dataobj.length-1];
 
-    // console.log(dataobj);
+    var newcurmonth = new Date().getMonth() + 1;
+    // var newcurmonth = 6;
+    var newcurday = new Date().getDate();
+    // var newcurday = 30;
+
+    // console.log(curmonth);
+    // console.log(curday);
+
+    // console.log(newcurdate.text[newcurdate.text.length-1])
+    // console.log(newcurdate.time[newcurdate.time.length-1])
+    // console.log(newcurdate.month)
+    // console.log(newcurdate.day[newcurdate.day.length-1])
+
+    if(curdata.month != newcurmonth){
+
+        learn = 0;
+        study = 0;
+    
+        lntime.innerHTML = learn;
+        sttime.innerHTML = study;
+
+        var curmel = document.createElement('li');
+        curmel.className = 'month-item';
+
+        curmel.innerHTML = `
+            <a href="javascript:void(0);" class="month-btn">
+                <p>${newcurmonth} month</p>
+                <ion-icon name="caret-down-outline" class="dropdown-icon"></ion-icon>
+            </a>
+
+            <ul class="days-container">
+                <li class="day-item">
+                    <a href="javascript:void(0);" class="day-btn">
+                        <p>${newcurday} - ${newcurmonth}</p>
+                        <ion-icon name="caret-forward-outline"></ion-icon>
+                    </a>
+                </li>
+            </ul>
+        `;
+
+        // console.log(curmel);
+        uimonthcontainer.append(curmel);
+
+        contentItemcontainer.innerHTML = '';
+
+        emptypageshow();
+    }else if(curdata.day[curdata.day.length-1] != newcurday){
+
+        learn = 0;
+        study = 0;
+    
+        lntime.innerHTML = learn;
+        sttime.innerHTML = study;
+
+        var uidaycontainers = document.querySelectorAll('.days-container');
+
+        var curdel = document.createElement('li');
+        curdel.className = 'day-item';
+
+        curdel.innerHTML = `
+            <a href="javascript:void(0);" class="day-btn">
+                <p>${newcurday} - ${newcurmonth}</p>
+                <ion-icon name="caret-forward-outline"></ion-icon>
+            </a>
+        `;
+
+        uidaycontainers[uidaycontainers.length-1].append(curdel);
+
+        contentItemcontainer.innerHTML = '';
+
+        emptypageshow();
+    }
+
+    monthdayhis();
+
 
 }
 
@@ -533,6 +661,11 @@ function adddataboxhide(){
 function emptypagehide(){
     emptypage.classList.add('hide');
 }
+
+function emptypageshow(){
+    emptypage.classList.remove('hide');
+}
+
 
 
 
