@@ -45,7 +45,7 @@ body{
 /* start history part */
 .history{
     position: relative;
-    width: 20%;
+    min-width: 280px;
     box-shadow: 5px 0 20px rgba(0,0,0,0.1);
 
     z-index: 50;
@@ -55,6 +55,21 @@ body{
     background-color: var(--bg-navbar);
     width: 100%;
     height: 60px;
+}
+
+.his-close{
+    position: absolute;
+    top: 12px;
+
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: var(--bg-navbar);
+
+    cursor: pointer;
+}
+.his-close:active{
+    color: rgba(3, 4, 94, 0.4);
 }
 
 .month-day-history-container{
@@ -71,7 +86,7 @@ body{
     flex-wrap: wrap;
 }
 .title-box .title{
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 
 .title-box .year-list-container{
@@ -79,7 +94,7 @@ body{
 }
 .year-list-container .year-btn{
     font-size: 15px;
-    padding: 5px 20px;
+    padding: 5px 10px;
     border: none;
     background: transparent;
     border-radius: 5px;
@@ -254,6 +269,7 @@ body{
 
     width: 30px;
     height: 30px;
+    font-size: 20px;
     background: var(--bg-navbar);
     color: #fff;
 
@@ -309,7 +325,7 @@ body{
 /* start main part */
 main{
     position: relative;
-    width: 60%;
+    width: calc(100% - 560px);
 }
 .navbar{
     height: 60px;
@@ -443,6 +459,7 @@ main{
     width: 100%;
     height: calc(100% - 20px);
 
+    padding: 0 5px;
     overflow-y: auto;
 }
 
@@ -482,7 +499,7 @@ main{
 /* start times part */
 .times-container{
     position: relative;
-    width: 20%;
+    min-width: 280px;
     /* border-left: 1px solid var(--bg-navbar); */
     box-shadow: -5px 0 20px rgba(0,0,0,0.1);
 
@@ -497,6 +514,152 @@ main{
     color: var(--text-color);
 }
 /* start times part */
+
+
+
+
+/* make it responsive */
+@media (max-width:992px){
+
+    .history {
+        min-width: 240px;
+    }
+
+    main{
+        width: 100%;
+    }
+
+    .times-container{
+        min-width: 200px;
+    }
+
+}
+
+@media (max-width:500px) {
+    
+    .history{
+        position: absolute;
+        left: 0;
+        box-shadow: 5px 0 20px rgba(0,0,0,0.0);
+        min-width: 220px;
+        height: 100vh;
+        background: var(--bg-background);
+
+        transform: translateX(-100%);
+
+        transition: 0.2s;
+    
+        z-index: 1000;
+    }
+    .history.active{
+        transform: translateX(0);
+        box-shadow: 5px 0 20px rgba(0,0,0,0.1);
+    }
+    
+    main{
+        position: relative;
+        width: 100%;
+    }
+
+    .contents {
+        margin-top: 50px;
+        height: calc(100% - 60px);
+        padding: 20px 0px;
+    }
+
+    .contents h3{
+        padding: 0 20px;
+    }
+
+    .contentItem-container {
+        padding: 0 20px;
+    }
+
+    
+    .content-item:hover{
+        transform: scale(1);
+        background: var(--bg-day-hover);
+        /* box-shadow: 0 0 20px rgba(0,0,0,0.1); */
+    }
+
+    .top-bg{
+        background-color: var(--bg-background);
+    }
+    
+    .times-container{
+        position: absolute;
+        min-width: 100%;
+        margin-top: 60px;
+        /* border-left: 1px solid var(--bg-navbar); */
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        background: var(--bg-background);
+    
+        z-index: 50;
+    }
+
+    .times-container .top-bg{
+        display: none;
+    }
+
+    .times{
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 20px;
+    }
+
+    .his-close{
+        right: -45px;
+        color: #fff;
+
+        transition: 0.2s;
+    }
+
+    .his-close.closeicon{
+        right: 25px;
+        color: var(--bg-navbar);
+    }
+
+    .his-close:active{
+        color: rgba(255,255,255,0.4);
+    }
+
+
+    .add-data-box-big-bg {
+        padding: 20px;
+    }
+
+    .add-data-box {
+        position: relative;
+        width: 100%;
+        background: var(--bg-background);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .add-data-box .btn-close {
+        top: 15px;
+        right: 15px;
+    }
+
+    .data-add-btn {
+        right: 15px;
+        bottom: 15px;
+    }
+
+
+    .data-add-btn .tooltip {
+        width: 350px;
+    }
+    .tooltip h3{
+        font-size: 18px;
+    }
+    .tooltip p{
+        font-size: 15px;
+    }
+}
 
 
 

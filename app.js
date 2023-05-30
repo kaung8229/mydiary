@@ -5,6 +5,24 @@ var uiyears = document.querySelectorAll('.years');
 
 var uimonthcontainer = document.querySelector('.month-container');
 
+var historyBx = document.querySelector('.history');
+var hisclose = document.querySelector('.his-close');
+
+hisclose.addEventListener('click',function(){
+
+    // console.log(historyBx);
+
+    this.classList.toggle("closeicon");
+    if(this.children[0].name != "close"){
+        this.children[0].name = "close";
+    }else{
+        this.children[0].name = "time-outline";
+    }
+
+    historyBx.classList.toggle("active");
+
+})
+
 // start year
 uiyearbtn.onclick = function(){
     // console.log(this);
@@ -441,7 +459,7 @@ function addnewdata(addtime,datatext){
 
 }
 
-function newdata(datals,dataobj,datanew,learn,study,daynow,monthnow){
+function newdata(datals,dataobj,datanew){
 
     datals.time = dataobj.time;
     datals.text = dataobj.text;
@@ -456,7 +474,7 @@ function newdata(datals,dataobj,datanew,learn,study,daynow,monthnow){
 
 }
 
-function overridedata(datals,dataobj,datanew,learn,study){
+function overridedata(datals,dataobj,datanew){
 
     // console.log("OOB",dataobj);
 
@@ -507,6 +525,9 @@ function showbyhistory(objs,clickday,clickmonth){
 
     // console.log(objs);
 
+    let monthnow = new Date().getMonth() + 1;
+    let daynow = new Date().getDate();
+
     var curobj = '';
 
     objs.forEach(obj=>{
@@ -532,7 +553,12 @@ function showbyhistory(objs,clickday,clickmonth){
     // console.log(clickday);
 
     if(curobj){
-        maintitle.innerHTML = `${clickday} - ${clickmonth}`;
+
+        if(daynow == clickday && monthnow == clickmonth){
+            maintitle.innerHTML = `Today`;
+        }else{
+            maintitle.innerHTML = `${clickday} - ${clickmonth}`;
+        }
 
         var curidx = curobj.day.indexOf(+clickday);
     
