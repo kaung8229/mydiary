@@ -555,6 +555,11 @@ main{
         transform: translateX(0);
         box-shadow: 5px 0 20px rgba(0,0,0,0.1);
     }
+
+    .month-day-history-container {
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+    }
     
     main{
         position: relative;
